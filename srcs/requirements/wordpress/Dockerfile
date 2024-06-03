@@ -1,18 +1,28 @@
 FROM debian:buster
 
-# Install packages
+EXPOSE 9000
+
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y wget
-RUN apt-get install -y php7.3
-RUN apt-get install -y php7.3-fpm
-RUN apt-get install -y php7.3-mysql
-RUN apt-get install -y mariadb-client
+RUN apt-get install -y \
+    php7.3-fpm \
+    php7.3-mysql \
+    mariadb-client \
+    curl && \
+    rm -rf /var/lib/apt/lists/*
 
-# Install wordpress
-RUN wget https://wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www
-RUN cd /var/www && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_FR.tar.gz
+COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d
 
-# Add permissions
-RUN chown -R root:root /var/www/wordpress
+ADD https://wordpress.org/latest.tar.gz /var/www/latest.tar.gz
 
-# Copy the configuration file of php and wordpress
+RUN cd /var/www && tar -xvf latest.tar.gz && \
+    rm -rf latest.tar.gz
+
+RUN curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar --output /usr/bin/wp --silent
+
+RUN chmod +x ./usr/bin/wp
+
+RUN mkdir /run/php
+
+COPY ./conf/config.sh /var/www/wordpress/config.sh
+RUN chmod +x /var/www/wordpress/config.sh
+CMD ["bash", "/var/www/wordpress/config.sh"]
