@@ -44,6 +44,7 @@ services:
     networks:
       - inception
     ports:
+      - "80:80"
       - "443:443"
     volumes:
       - wordpress_data:/var/www/wordpress
