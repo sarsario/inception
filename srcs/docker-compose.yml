@@ -4,7 +4,6 @@ networks:
 services:
   mariadb:
     container_name: mariadb
-    image: mariadb
     build:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
@@ -21,14 +20,13 @@ services:
 
   wordpress:
     container_name: wordpress
-    image: wordpress
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
     networks:
       - inception
     volumes:
-      - wordpress_data:/var/www/wordpress
+      - wordpress_data:/var/www/html
     env_file:
       - .env
     depends_on:
@@ -37,7 +35,6 @@ services:
 
   nginx:
     container_name: nginx
-    image: nginx
     build:
       context: ./requirements/nginx
       dockerfile: Dockerfile
@@ -47,7 +44,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - wordpress_data:/var/www/wordpress
+      - wordpress_data:/var/www/html
     depends_on:
       - wordpress
       - mariadb
