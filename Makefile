@@ -1,16 +1,13 @@
 all:
 	@sudo hostsed add 127.0.0.1 osarsari.42.fr && echo "osarsari.42.fr added to /etc/hosts"
-	sudo docker compose -f srcs/docker-compose.yml up -d --build
+	sudo docker compose -f ./srcs/docker-compose.yml up -d --build
 	@echo "Containers are up and running"
 
-# sudo docker compose -f srcs/docker-compose.yml down --rmi all -v
-# docker network rm $$(docker network ls -q);
 clean:
-	@sudo docker compose -f srcs/docker-compose.yml stop
-	@sudo docker compose -f srcs/docker-compose.yml down
-	@sudo docker compose -f srcs/docker-compose.yml rm -f
-	@sudo docker compose -f srcs/docker-compose.yml down --rmi all -v
+	@sudo docker compose -f ./srcs/docker-compose.yml stop
+	@sudo docker compose -f ./srcs/docker-compose.yml down --rmi all -v
 	@echo "Containers are down"
+	@sudo docker system prune -a
 
 fclean: clean
 	@sudo hostsed rm 127.0.0.1 osarsari.42.fr && echo "osarsari.42.fr removed from /etc/hosts"
@@ -25,6 +22,7 @@ fclean: clean
 re: fclean all
 
 ls:
-	sudo docker ps -a
+	sudo docker image ls
+	sudo docker ps
 
 .PHONY: all clean fclean re
