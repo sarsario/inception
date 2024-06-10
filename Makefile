@@ -7,7 +7,6 @@ clean:
 	@sudo docker compose -f ./srcs/docker-compose.yml stop
 	@sudo docker compose -f ./srcs/docker-compose.yml down --rmi all -v
 	@echo "Containers are down"
-	@sudo docker system prune -a
 
 fclean: clean
 	@sudo hostsed rm 127.0.0.1 osarsari.42.fr && echo "osarsari.42.fr removed from /etc/hosts"
@@ -18,6 +17,7 @@ fclean: clean
 	@if [ -d "/home/osarsari/data/mariadb" ]; then \
 	sudo rm -rf /home/osarsari/data/mariadb/* && echo "MariaDB data removed"; \
 	fi;
+	@sudo docker system prune -a -f --volumes
 
 re: fclean all
 
