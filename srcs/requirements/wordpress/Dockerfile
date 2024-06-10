@@ -29,8 +29,11 @@ RUN curl -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh
     chmod +x /usr/local/bin/wp
 
 # Copy configuration script
-COPY ./conf/config.sh /var/www/wordpress
+COPY ./conf/config.sh /var/www/wordpress/config.sh
 RUN chmod +x /var/www/wordpress/config.sh
+
+# Debugging step: Verify the file exists
+RUN ls -l /var/www/wordpress/
 
 # Set the working directory
 WORKDIR /var/www/wordpress
