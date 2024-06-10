@@ -6,10 +6,12 @@ all:
 # sudo docker compose -f srcs/docker-compose.yml down --rmi all -v
 # docker network rm $$(docker network ls -q);
 clean:
-	@docker stop $$(docker ps -qa);\
-	docker rm $$(docker ps -qa);\
-	docker rmi -f $$(docker images -qa);\
-	docker volume rm $$(docker volume ls -q);\
+	@sudo hostsed rm
+	@sudo docker compose -f srcs/docker-compose.yml down
+	@sudo docker compose -f srcs/docker-compose.yml rm -f
+	@sudo docker compose -f srcs/docker-compose.yml down --rmi all -v
+	@sudo docker network rm $$(docker network ls -q)
+	@echo "osarsari.42.fr removed from /etc/hosts"
 	@echo "Containers are down"
 
 fclean: clean
