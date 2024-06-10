@@ -1,5 +1,6 @@
 networks:
-  inception: {}
+  inception: 
+    driver: bridge
 
 services:
   mariadb:
