@@ -1,6 +1,6 @@
 all:
 	@sudo hostsed add 127.0.0.1 osarsari.42.fr && echo "osarsari.42.fr added to /etc/hosts"
-	sudo docker compose -f srcs/docker-compose.yml up -d
+	sudo docker compose -f srcs/docker-compose.yml up -d --build
 	@echo "Containers are up and running"
 
 clean:
