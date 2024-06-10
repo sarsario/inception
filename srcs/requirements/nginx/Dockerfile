@@ -8,11 +8,10 @@ RUN apt-get install -y \
 RUN mkdir -p /etc/nginx/ssl
 
 RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
-       -out /etc/nginx/ssl/inception.crt \
-       -keyout /etc/nginx/ssl/inception.key \
+       -out /etc/nginx/ssl/osarsari.crt \
+       -keyout /etc/nginx/ssl/osarsari.key \
        -subj "/C=FR/ST=Paris/L=Paris/O=42 School/OU=osarsari/CN=osarsari/"
 
-# COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 COPY ./conf/nginx.conf /etc/nginx/conf.d
 
 RUN mkdir -p /var/run/nginx
