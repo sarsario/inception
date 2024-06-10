@@ -7,7 +7,6 @@ all:
 # docker network rm $$(docker network ls -q);
 clean:
 	@sudo docker compose -f srcs/docker-compose.yml stop
-	@sudo hostsed rm 127.0.0.1 osarsari.42.fr && echo "osarsari.42.fr removed from /etc/hosts"
 	@sudo docker compose -f srcs/docker-compose.yml down
 	@sudo docker compose -f srcs/docker-compose.yml rm -f
 	@sudo docker compose -f srcs/docker-compose.yml down --rmi all -v
