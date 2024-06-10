@@ -23,6 +23,6 @@ RUN curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 
 RUN chmod +x ./usr/bin/wp
 
-COPY ./conf/config.sh /var/www/wordpress/config.sh
+COPY ./conf/config.sh /var/www/wordpress
 RUN chmod +x /var/www/wordpress/config.sh
 CMD ["bash", "/var/www/wordpress/config.sh"]
