@@ -1,18 +1,25 @@
 FROM debian:buster
 
+EXPOSE 443
+
 RUN apt-get update
 RUN apt-get install -y \
 	nginx \
 	openssl && \
        rm -rf /var/lib/apt/lists/*
 
+RUN mkdir -p /etc/nginx/ssl
+
 RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
-       -out /etc/ssl/certs/osarsari.crt \
-       -keyout /etc/ssl/private/osarsari.key \
-       -subj "/C=FR/ST=Paris/L=Paris/O=42 School/OU=osarsari/CN=osarsari/"
+       -out /etc/nginx/ssl/osarsari.crt \
+       -keyout /etc/nginx/ssl/osarsari.key \
+       -subj "//C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=osarsari.42.fr/UID=osarsari"
 
-COPY ./conf/nginx.conf /etc/nginx/sites-available/default
+RUN mkdir -p /var/run/nginx
 
-EXPOSE 443
+COPY ./conf/nginx.conf /etc/nginx/nginx.conf
+
+RUN chmod 755 /var/www/wordpress
+RUN chown -R www-data:www-data /var/www/wordpress
 
 CMD ["nginx", "-g", "daemon off;"]
