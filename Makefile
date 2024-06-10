@@ -10,7 +10,6 @@ clean:
 	@sudo docker compose -f srcs/docker-compose.yml down
 	@sudo docker compose -f srcs/docker-compose.yml rm -f
 	@sudo docker compose -f srcs/docker-compose.yml down --rmi all -v
-	@sudo docker network rm $$(docker network ls -q)
 	@echo "Containers are down"
 
 fclean: clean
