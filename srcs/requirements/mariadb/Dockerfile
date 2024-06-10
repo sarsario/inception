@@ -12,9 +12,8 @@ RUN rm /etc/mysql/mariadb.conf.d/50-server.cnf
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 # Copy the script to create the database
-COPY tools/create_db.sh /
-RUN bash ./create_db.sh
-RUN rm -rf ./create_db.sh
+COPY tools/create_db.sh ./create_db.sh
+RUN chmod +x ./create_db.sh && bash ./create_db.sh
 
 # Start the service
 CMD [ "mysqld_safe" ]
