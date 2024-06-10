@@ -10,6 +10,8 @@ RUN apt-get install -y \
     curl && \
     rm -rf /var/lib/apt/lists/*
 
+RUN mkdir -p /var/www/wordpress && mkdir -p /run/php
+
 COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d
 
 ADD https://wordpress.org/latest.tar.gz /var/www/latest.tar.gz
@@ -21,8 +23,6 @@ RUN curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 
 RUN chmod +x ./usr/bin/wp
 
-RUN mkdir /run/php
-
-COPY ./conf/config.sh /var/www/html/config.sh
-RUN chmod +x /var/www/html/config.sh
-CMD ["bash", "/var/www/html/config.sh"]
+COPY ./conf/config.sh /var/www/wordpress/config.sh
+RUN chmod +x /var/www/wordpress/config.sh
+CMD ["bash", "/var/www/wordpress/config.sh"]
