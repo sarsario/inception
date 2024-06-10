@@ -21,9 +21,7 @@ COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d
 
 # Download and extract WordPress
 ADD https://wordpress.org/latest.tar.gz /tmp/latest.tar.gz
-RUN tar -xzf /tmp/latest.tar.gz -C /var/www && \
-    mv /var/www/wordpress/* /var/www/wordpress && \
-    rm -rf /var/www/wordpress/* && \
+RUN tar -xzf /tmp/latest.tar.gz -C /var/www/wordpress --strip-components=1 && \
     rm /tmp/latest.tar.gz
 
 # Download and set up WP-CLI
