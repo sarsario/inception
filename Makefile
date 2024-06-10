@@ -3,13 +3,13 @@ all:
 	sudo docker compose -f srcs/docker-compose.yml up -d --build
 	@echo "Containers are up and running"
 
+# sudo docker compose -f srcs/docker-compose.yml down --rmi all -v
+# docker network rm $$(docker network ls -q);
 clean:
-	# sudo docker compose -f srcs/docker-compose.yml down --rmi all -v
 	@docker stop $$(docker ps -qa);\
 	docker rm $$(docker ps -qa);\
 	docker rmi -f $$(docker images -qa);\
 	docker volume rm $$(docker volume ls -q);\
-	docker network rm $$(docker network ls -q);\
 	@echo "Containers are down"
 
 fclean: clean
