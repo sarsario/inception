@@ -55,11 +55,11 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/osarsari/data/mariadb
+      device: /home/ec2-user/data/mariadb
 
   wordpress_data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/osarsari/data/wordpress
+      device: /home/ec2-user/data/wordpress
